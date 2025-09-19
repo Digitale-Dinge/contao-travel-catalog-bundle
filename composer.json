@@ -1,0 +1,33 @@
+{
+    "name": "digitale-dinge/contao-travel-catalog-bundle",
+    "description": "description",
+    "minimum-stability": "stable",
+    "type": "contao-bundle",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Daniel Jahnsmüller",
+            "email": "code@tastaturberuf.de",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.4",
+        "contao/core-bundle": "^5.6",
+        "sqids/sqids": "^0.5.0"
+    },
+    "require-dev": {
+        "contao/manager-plugin": "^2.0"
+    },
+    "conflict": {
+        "contao/manager-plugin": "<2.0 || >=3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "DigitaleDinge\\TravelCatalogBundle\\": "src/"
+        }
+    },
+    "extra": {
+        "contao-manager-plugin": "DigitaleDinge\\TravelCatalogBundle\\DigitaleDingeTravelCatalogBundle"
+    }
+}
