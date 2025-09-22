@@ -12,9 +12,11 @@ use DigitaleDinge\TravelCatalogBundle\Model\TravelModel;
             'dataContainer' => DC_Table::class,
             'enableVersioning' => true,
             'ptable' => TravelModel::getTable(),
+            'doNotCopyRecords' => true,
             'sql' => [
                 'keys' => [
-                    'id' => 'primary'
+                    'id' => 'primary',
+                    'travel_code' => 'unique'
                 ]
             ]
         ],
@@ -27,12 +29,14 @@ use DigitaleDinge\TravelCatalogBundle\Model\TravelModel;
         ],
         'list' => [
             'label' => [
-                'fields' => ['price', 'travel_code', 'published'],
+                'fields' => ['price', 'travel_code', 'departure', 'return'],
                 'showColumns' => true,
+                'showFirstOrderBy' => false
             ],
             'sorting' => [
                 'mode' => DataContainer::MODE_SORTABLE,
-            ]
+                'panelLayout' => 'sort,filter;search,limit'
+            ],
         ],
         'fields' => [
             'id' => [
@@ -57,6 +61,7 @@ use DigitaleDinge\TravelCatalogBundle\Model\TravelModel;
             'travel_code' => [
                 'inputType' => 'text',
                 'eval' => [
+                    'unique' => true,
                     'maxlength' => 16,
                     'tl_class' => 'w33'
                 ],
@@ -84,6 +89,7 @@ use DigitaleDinge\TravelCatalogBundle\Model\TravelModel;
             ],
             'published' => [
                 'inputType' => 'checkbox',
+                'toggle' => true,
                 'eval' => [
                     'tl_class' => 'w33 m12'
                 ],

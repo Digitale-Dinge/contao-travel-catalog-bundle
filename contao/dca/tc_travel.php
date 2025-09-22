@@ -13,6 +13,7 @@ use DigitaleDinge\TravelCatalogBundle\Model\DateModel;
             'dataContainer' => DC_Table::class,
             'enableVersioning' => true,
             'ctable' => [DateModel::getTable(), ContentModel::getTable()],
+            'markAsCopy' => 'name',
             'sql' => [
                 'keys' => [
                     'id' => 'primary'
@@ -32,9 +33,28 @@ use DigitaleDinge\TravelCatalogBundle\Model\DateModel;
             'label' => [
                 'fields' => ['title', 'name', 'published'],
                 'showColumns' => true,
+                'showFirstOrderBy' => false
             ],
             'sorting' => [
                 'mode' => DataContainer::MODE_SORTABLE,
+                'panelLayout' => 'sort,filter;search,limit'
+            ],
+            'operations' => [
+                'edit',
+                'edit_prices' => [
+                    'primary' => true,
+                    'href' => 'table=' . DateModel::getTable(),
+                    'icon' => 'bundles/diditaledingecontaotravelcatalog/icons/euro.svg',
+                ],
+                'edit_content' => [
+                    'primary' => true,
+                    'href' => 'table=' . ContentModel::getTable(),
+                    'icon' => 'children.svg',
+                ],
+                'copy',
+                'delete',
+                'toggle',
+                'show'
             ]
         ],
         'fields' => [
@@ -47,7 +67,6 @@ use DigitaleDinge\TravelCatalogBundle\Model\DateModel;
             'title' => [
                 'inputType' => 'text',
                 'eval' => [
-                    'rgxp' => 'extnd',
                     'maxlength' => 255,
                     'tl_class' => 'w50'
                 ],
@@ -56,7 +75,6 @@ use DigitaleDinge\TravelCatalogBundle\Model\DateModel;
             'subtitle' => [
                 'inputType' => 'text',
                 'eval' => [
-                    'rgxp' => 'extnd',
                     'maxlength' => 255,
                     'tl_class' => 'w50'
                 ],
@@ -66,7 +84,6 @@ use DigitaleDinge\TravelCatalogBundle\Model\DateModel;
                 'inputType' => 'text',
                 'eval' => [
                     'mandatory' => true,
-                    'rgxp' => 'extnd',
                     'maxlength' => 255,
                     'tl_class' => 'w50'
                 ],
@@ -134,6 +151,7 @@ use DigitaleDinge\TravelCatalogBundle\Model\DateModel;
             ],
             'published' => [
                 'inputType' => 'checkbox',
+                'toggle' => true,
                 'eval' => [
                     'tl_class' => 'w33 m12'
                 ],
