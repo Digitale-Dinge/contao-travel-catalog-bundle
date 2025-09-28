@@ -46,6 +46,11 @@ use DigitaleDinge\TravelCatalogBundle\Model\TravelModel;
                 'sql' => "int(10) unsigned NOT NULL default '0'"
             ],
             'pid' => [
+                'relation' => [
+                    'table' => TravelModel::getTable(),
+                    'type' => 'hasOne',
+                    'load' => 'lazy',
+                ],
                 'sql' => "int(10) unsigned NOT NULL default '0'"
             ],
             'price' => [
@@ -60,15 +65,19 @@ use DigitaleDinge\TravelCatalogBundle\Model\TravelModel;
             ],
             'travel_code' => [
                 'inputType' => 'text',
+                'search' => true,
                 'eval' => [
                     'unique' => true,
                     'maxlength' => 16,
                     'tl_class' => 'w33'
                 ],
-                'sql' => "varchar(16) NOT NULL default ''"
+                'sql' => "varchar(16) NULL"
             ],
             'departure' => [
                 'inputType' => 'text',
+                'search' => true,
+                'filter' => true,
+                'sorting' => true,
                 'eval' => [
                     'mandatory' => true,
                     'rgxp' => 'datim',
@@ -79,6 +88,9 @@ use DigitaleDinge\TravelCatalogBundle\Model\TravelModel;
             ],
             'return' => [
                 'inputType' => 'text',
+                'search' => true,
+                'filter' => true,
+                'sorting' => true,
                 'eval' => [
                     'mandatory' => true,
                     'rgxp' => 'datim',

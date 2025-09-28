@@ -2,11 +2,26 @@
 
 declare(strict_types=1);
 
+use DigitaleDinge\TravelCatalogBundle\Controller\DetailController;
+use DigitaleDinge\TravelCatalogBundle\Controller\FilterController;
+use DigitaleDinge\TravelCatalogBundle\Controller\ListController;
+use DigitaleDinge\TravelCatalogBundle\DataContainer\DateDataContainer;
 use DigitaleDinge\TravelCatalogBundle\DataContainer\TravelDataContainer;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
+/**
+ * @formatter:off
+ */
 return static function (ContainerConfigurator $container): void {
-    $services = $container->services();
+    $container->services()
+        ->defaults()
+            ->autowire()
+            ->autoconfigure()
 
-    $services->set(TravelDataContainer::class);
+        ->set(DateDataContainer::class)
+        ->set(TravelDataContainer::class)
+        ->set(ListController::class)
+        ->set(FilterController::class)
+        ->set(DetailController::class)
+    ;
 };

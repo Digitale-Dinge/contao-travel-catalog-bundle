@@ -1,0 +1,46 @@
+<h1>Detail</h1>
+
+<dl>
+    <dt>travel.id</dt>
+    <dd>{{ travel.id }}</dd>
+    <dt>travel.lastUpdate</dt>
+    <dd>{{ travel.lastUpdate|date }}</dd>
+    <dt>travel.name</dt>
+    <dd>{{ travel.name }}</dd>
+    <dt>travel.alias</dt>
+    <dd>{{ travel.alias }}</dd>
+    <dt>travel.title</dt>
+    <dd>{{ travel.title }}</dd>
+    <dt>travel.subtitle</dt>
+    <dd>{{ travel.subtitle }}</dd>
+    <dt>travel.description</dt>
+    <dd>{{ travel.description|sanitize_html }}</dd>
+    <dt>travel.content</dt>
+    <dd>{{ travel.content|raw }}</dd>
+</dl>
+
+<h2>Prices</h2>
+
+{% for price in prices %}
+    <dl>
+        <dt>price.id (Achtung: Das ist die <code>tc_date.id</code>)</dt>
+        <dd>{{ price.id }}</dd>
+        <dt>price.price (Zahlen müssen in Twig konfiguriert werden)</dt>
+        <dd>{{ price.price|format_currency('EUR') }}</dd>
+        <dt>price.tstamp (Letztes Update der Preisdaten)</dt>
+        <dd>{{ price.tstamp|date }}</dd>
+        <dt>price.href</dt>
+        <dd><a href="{{ price.href }}">{{ price.href }}</a></dd>
+        <dt>price.code</dt>
+        <dd>{{ price.code }}</dd>
+        <dt>price.departure</dt>
+        <dd>{{ price.departure|date }}</dd>
+        <dt>price.return</dt>
+        <dd>{{ price.return|date }}</dd>
+    </dl>
+{% else %}
+    Keine Preise vorhanden.
+{% endfor %}
+
+{{ dump(travel) }}
+{{ dump(prices) }}

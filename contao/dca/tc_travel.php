@@ -24,14 +24,14 @@ use DigitaleDinge\TravelCatalogBundle\Model\DateModel;
             'default' => '
                 name,alias,title,subtitle;
                 meta_title,meta_description;
-                description;
-                image,images;
+                countries,states,description;
+                image;
                 published,start,stop;
             '
         ],
         'list' => [
             'label' => [
-                'fields' => ['title', 'name', 'published'],
+                'fields' => ['name', 'title', 'subtitle'],
                 'showColumns' => true,
                 'showFirstOrderBy' => false
             ],
@@ -44,7 +44,7 @@ use DigitaleDinge\TravelCatalogBundle\Model\DateModel;
                 'edit_prices' => [
                     'primary' => true,
                     'href' => 'table=' . DateModel::getTable(),
-                    'icon' => 'bundles/diditaledingecontaotravelcatalog/icons/euro.svg',
+                    'icon' => 'bundles/digitaledingetravelcatalog/icons/euro.svg',
                 ],
                 'edit_content' => [
                     'primary' => true,
@@ -66,6 +66,7 @@ use DigitaleDinge\TravelCatalogBundle\Model\DateModel;
             ],
             'title' => [
                 'inputType' => 'text',
+                'search' => true,
                 'eval' => [
                     'maxlength' => 255,
                     'tl_class' => 'w50'
@@ -81,6 +82,7 @@ use DigitaleDinge\TravelCatalogBundle\Model\DateModel;
                 'sql' => "varchar(255) NOT NULL default ''"
             ],
             'name' => [
+                'search' => true,
                 'inputType' => 'text',
                 'eval' => [
                     'mandatory' => true,
@@ -93,6 +95,45 @@ use DigitaleDinge\TravelCatalogBundle\Model\DateModel;
                 'inputType' => 'text',
                 'eval' => [
                     'maxlength' => 255,
+                    'tl_class' => 'w50'
+                ],
+                'sql' => "varchar(255) NOT NULL default ''"
+            ],
+            'countries' => [
+                'inputType' => 'select',
+                'filter' => true,
+                'eval' => [
+                    'multiple' => true,
+                    'includeBlankOption' => true,
+                    'chosen' => true,
+                    'tl_class' => 'w50'
+                ],
+                'sql' => "varchar(255) NOT NULL default ''"
+            ],
+            'states' => [
+                'inputType' => 'select',
+                'options' => [
+                    'BW',
+                    'BY',
+                    'BE',
+                    'BB',
+                    'HH',
+                    'HE',
+                    'MV',
+                    'NI',
+                    'NW',
+                    'RP',
+                    'SL',
+                    'SN',
+                    'ST',
+                    'SH',
+                    'TH'
+                ],
+                'filter' => true,
+                'eval' => [
+                    'multiple' => true,
+                    'includeBlankOption' => true,
+                    'chosen' => true,
                     'tl_class' => 'w50'
                 ],
                 'sql' => "varchar(255) NOT NULL default ''"
@@ -126,32 +167,15 @@ use DigitaleDinge\TravelCatalogBundle\Model\DateModel;
                 'eval' => [
                     'fieldType' => 'radio',
                     'files' => true,
-                    'extensions' => 'jpg,jpeg,gif,png',
+                    'extensions' => '%contao.image.valid_extensions%',
                     'tl_class' => 'clr'
                 ],
                 'sql' => "blob NULL"
-            ],
-            'images' => [
-                'inputType' => 'fileTree',
-                'eval' => [
-                    'fieldType' => 'checkbox',
-                    'files' => true,
-                    'extensions' => 'jpg,jpeg,gif,png',
-                    'tl_class' => 'clr'
-                ],
-                'sql' => "blob NULL"
-            ],
-            'travel_code' => [
-                'inputType' => 'text',
-                'eval' => [
-                    'maxlength' => 16,
-                    'tl_class' => 'w33'
-                ],
-                'sql' => "varchar(16) NOT NULL default ''"
             ],
             'published' => [
                 'inputType' => 'checkbox',
                 'toggle' => true,
+                'filter' => true,
                 'eval' => [
                     'tl_class' => 'w33 m12'
                 ],
@@ -159,6 +183,7 @@ use DigitaleDinge\TravelCatalogBundle\Model\DateModel;
             ],
             'start' => [
                 'inputType' => 'text',
+                'sorting' => true,
                 'eval' => [
                     'rgxp' => 'datim',
                     'datepicker' => true,
@@ -168,6 +193,7 @@ use DigitaleDinge\TravelCatalogBundle\Model\DateModel;
             ],
             'stop' => [
                 'inputType' => 'text',
+                'sorting' => true,
                 'eval' => [
                     'rgxp' => 'datim',
                     'datepicker' => true,
