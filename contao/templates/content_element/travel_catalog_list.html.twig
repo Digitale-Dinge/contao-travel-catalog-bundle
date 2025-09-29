@@ -24,6 +24,8 @@
         <dd>{{ travel.departure|date }}</dd>
         <dt>travel.return</dt>
         <dd>{{ travel.return|date }}</dd>
+        <dt>travel.isOneDayTrip</dt>
+        <dd>{{ dump(travel.isOneDayTrip) }}</dd>
         <dt>travel.description</dt>
         <dd>{{ travel.description|sanitize_html }}</dd>
         <dt>travel.content</dt>

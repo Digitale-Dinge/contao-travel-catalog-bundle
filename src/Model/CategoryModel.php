@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace DigitaleDinge\TravelCatalogBundle\Model;
 
 use Contao\Date;
-use Contao\FilesModel;
 use Contao\Model;
 
-class DateModel extends Model
+class CategoryModel extends Model
 {
-    public const string TABLE = 'tc_date';
+    public const string TABLE = 'tc_category';
 
     protected static $strTable = self::TABLE;
 
@@ -18,58 +17,9 @@ class DateModel extends Model
         get => \DateTimeImmutable::createFromTimestamp($this->__get('tstamp'));
     }
 
-    public string $code {
-        get => $this->__get('travel_code');
-    }
-
     public string $name {
         get => $this->getRelated('pid')->name;
     }
-
-    public string $alias {
-        get => $this->getRelated('pid')->alias;
-    }
-
-    public string $title {
-        get => $this->getRelated('pid')->title;
-    }
-
-    public string $subtitle {
-        get => $this->getRelated('pid')->subtitle;
-    }
-
-    public array $countries {
-        get => $this->getRelated('pid')->countries;
-    }
-
-    public string $description {
-        get => $this->getRelated('pid')->description ?? '';
-    }
-
-    public ?string $content {
-        get => $this->getRelated('pid')->content;
-    }
-
-    public ?FilesModel $image {
-        get => $this->getRelated('pid')->image;
-    }
-
-    public \DateTimeInterface $departure {
-        get => \DateTimeImmutable::createFromTimestamp((int)$this->__get('departure'));
-    }
-
-    public \DateTimeInterface $return {
-        get => \DateTimeImmutable::createFromTimestamp((int)$this->__get('return'));
-    }
-
-    public bool $isOneDayTrip {
-        get {
-            return $this->departure->format('Y-m-d') === $this->return->format('Y-m-d');
-        }
-    }
-
-    public ?string $href = null;
-
 
     public static function fqid(string $field, ?string $sorting = null): string
     {
@@ -95,16 +45,6 @@ class DateModel extends Model
         $options['column'][] = "$t.pid = '$pid'";
 
         return static::findAllPublished($options);
-    }
-
-    public static function findPublishedByCategories(array $categories, array $options = []): array
-    {
-        $options['eager'] = true;
-        $options = self::setPublishedOptions($options);
-
-        $options['having'] .= " AND pid__pid IN (" . implode(',', $categories) . ")";
-
-        return static::findAll($options)?->getModels() ?? [];
     }
 
     private static function setPublishedOptions(array $options = []): array

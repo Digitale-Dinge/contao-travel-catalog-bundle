@@ -10,7 +10,9 @@ use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
 use Contao\CoreBundle\Routing\ContentUrlGenerator;
 use Contao\CoreBundle\Twig\FragmentTemplate;
 use Contao\PageModel;
+use Contao\StringUtil;
 use DigitaleDinge\TravelCatalogBundle\Model\DateModel;
+use DigitaleDinge\TravelCatalogBundle\Model\TravelRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -21,6 +23,7 @@ final class ListController extends AbstractContentElementController
     public const string TYPE = 'travel_catalog_list';
 
     public function __construct(
+        private readonly TravelRepository $travelRepository,
         private readonly ContentUrlGenerator $urlGenerator
     )
     {
@@ -28,10 +31,19 @@ final class ListController extends AbstractContentElementController
 
     protected function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
-        $travels = DateModel::findAllPublished([
-            'order' => DateModel::fqid('departure', 'ASC'),
-            'eager' => true
-        ]);
+        $categories = StringUtil::deserialize($model->tc_categories, true);
+
+
+        if (count($categories) > 0) {
+            $travels = DateModel::findPublishedByCategories($categories, [
+                'order' => DateModel::fqid('departure', 'ASC'),
+            ]);
+        } else {
+            $travels = DateModel::findAllPublished([
+                'order' => DateModel::fqid('departure', 'ASC'),
+                'eager' => true
+            ]);
+        }
 
         $pageModel = PageModel::findById($model->jumpTo);
 

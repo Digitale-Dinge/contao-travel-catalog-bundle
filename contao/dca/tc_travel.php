@@ -5,13 +5,17 @@ declare(strict_types=1);
 use Contao\ContentModel;
 use Contao\DataContainer;
 use Contao\DC_Table;
+use DigitaleDinge\TravelCatalogBundle\Model\CategoryModel;
 use DigitaleDinge\TravelCatalogBundle\Model\DateModel;
+use DigitaleDinge\TravelCatalogBundle\Model\TravelModel;
+use Doctrine\DBAL\Types\Types;
 
 (static function (string $table): void {
     $GLOBALS['TL_DCA'][$table] = [
         'config' => [
             'dataContainer' => DC_Table::class,
             'enableVersioning' => true,
+            'ptable' => CategoryModel::getTable(),
             'ctable' => [DateModel::getTable(), ContentModel::getTable()],
             'markAsCopy' => 'name',
             'sql' => [
@@ -22,6 +26,7 @@ use DigitaleDinge\TravelCatalogBundle\Model\DateModel;
         ],
         'palettes' => [
             'default' => '
+                pid;
                 name,alias,title,subtitle;
                 meta_title,meta_description;
                 countries,states,description;
@@ -60,6 +65,24 @@ use DigitaleDinge\TravelCatalogBundle\Model\DateModel;
         'fields' => [
             'id' => [
                 'sql' => "int(10) unsigned NOT NULL auto_increment"
+            ],
+            'pid' => [
+                'inputType' => 'select',
+                'foreignKey' => CategoryModel::fqid('name'),
+                'eval' => [
+                    'tl_class' => 'w50'
+                ],
+                'relation' => [
+                    'type' => 'hasOne',
+                    'load' => 'lazy',
+                    'table' => TravelModel::getTable(),
+                ],
+                'sql' => [
+                    'type' => Types::INTEGER,
+                    'unsigned' => true,
+                    'notnull' => true,
+                    'default' => 0,
+                ]
             ],
             'tstamp' => [
                 'sql' => "int(10) unsigned NOT NULL default '0'"

@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Contao\DataContainer;
 use Contao\DC_Table;
 use DigitaleDinge\TravelCatalogBundle\Model\TravelModel;
+use Doctrine\DBAL\Types\Types;
 
 (static function (string $table): void {
     $GLOBALS['TL_DCA'][$table] = [
@@ -22,14 +23,22 @@ use DigitaleDinge\TravelCatalogBundle\Model\TravelModel;
         ],
         'palettes' => [
             'default' => '
-                price,departure,return;
-                travel_code;
+                price,old_price,travel_code;
+                departure,return,departure_text,return_text;
                 published,start,stop;
             '
         ],
         'list' => [
             'label' => [
-                'fields' => ['price', 'travel_code', 'departure', 'return'],
+                'fields' => [
+                    'travel_code',
+                    'price',
+                    'old_price',
+                    'departure',
+                    'return',
+                    'departure_text',
+                    'return_text',
+                ],
                 'showColumns' => true,
                 'showFirstOrderBy' => false
             ],
@@ -59,9 +68,27 @@ use DigitaleDinge\TravelCatalogBundle\Model\TravelModel;
                     'mandatory' => true,
                     'rgxp' => 'digit',
                     'maxlength' => 7,
-                    'tl_class' => 'w33'
+                    'tl_class' => 'w25'
                 ],
-                'sql' => "float(7,2) NOT NULL default '0.00'"
+                'sql' => [
+                    'type' => Types::FLOAT,
+                    'unsigned' => true,
+                    'notnull' => true,
+                    'default' => 0,
+                ]
+            ],
+            'old_price' => [
+                'inputType' => 'text',
+                'eval' => [
+                    'rgxp' => 'digit',
+                    'maxlength' => 7,
+                    'tl_class' => 'w25'
+                ],
+                'sql' => [
+                    'type' => Types::FLOAT,
+                    'unsigned' => true,
+                    'notnull' => false,
+                ]
             ],
             'travel_code' => [
                 'inputType' => 'text',
@@ -69,7 +96,7 @@ use DigitaleDinge\TravelCatalogBundle\Model\TravelModel;
                 'eval' => [
                     'unique' => true,
                     'maxlength' => 16,
-                    'tl_class' => 'w33'
+                    'tl_class' => 'w25'
                 ],
                 'sql' => "varchar(16) NULL"
             ],
@@ -82,7 +109,7 @@ use DigitaleDinge\TravelCatalogBundle\Model\TravelModel;
                     'mandatory' => true,
                     'rgxp' => 'datim',
                     'datepicker' => true,
-                    'tl_class' => 'w33 wizard'
+                    'tl_class' => 'w25 wizard'
                 ],
                 'sql' => "varchar(10) COLLATE ascii_bin NOT NULL default ''"
             ],
@@ -95,9 +122,36 @@ use DigitaleDinge\TravelCatalogBundle\Model\TravelModel;
                     'mandatory' => true,
                     'rgxp' => 'datim',
                     'datepicker' => true,
-                    'tl_class' => 'w33 wizard'
+                    'tl_class' => 'w25 wizard'
                 ],
                 'sql' => "varchar(10) COLLATE ascii_bin NOT NULL default ''"
+            ],
+            'departure_text' => [
+                'inputType' => 'text',
+                'eval' => [
+                    'maxlength' => 255,
+                    'tl_class' => 'clr 1
+                    w25'
+                ],
+                'sql' => [
+                    'type' => Types::STRING,
+                    'length' => 255,
+                    'notnull' => true,
+                    'default' => '',
+                ]
+            ],
+            'return_text' => [
+                'inputType' => 'text',
+                'eval' => [
+                    'maxlength' => 255,
+                    'tl_class' => 'w25'
+                ],
+                'sql' => [
+                    'type' => Types::STRING,
+                    'length' => 255,
+                    'notnull' => true,
+                    'default' => '',
+                ]
             ],
             'published' => [
                 'inputType' => 'checkbox',

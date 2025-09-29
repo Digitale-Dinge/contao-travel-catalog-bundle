@@ -7,6 +7,7 @@ use DigitaleDinge\TravelCatalogBundle\Controller\FilterController;
 use DigitaleDinge\TravelCatalogBundle\Controller\ListController;
 use DigitaleDinge\TravelCatalogBundle\DataContainer\DateDataContainer;
 use DigitaleDinge\TravelCatalogBundle\DataContainer\TravelDataContainer;
+use DigitaleDinge\TravelCatalogBundle\Model\TravelRepository;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 /**
@@ -20,8 +21,11 @@ return static function (ContainerConfigurator $container): void {
 
         ->set(DateDataContainer::class)
         ->set(TravelDataContainer::class)
+
         ->set(ListController::class)
         ->set(FilterController::class)
         ->set(DetailController::class)
+
+        ->set(TravelRepository::class)
     ;
 };
