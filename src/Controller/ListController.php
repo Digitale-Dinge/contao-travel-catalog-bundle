@@ -33,7 +33,6 @@ final class ListController extends AbstractContentElementController
     {
         $categories = StringUtil::deserialize($model->tc_categories, true);
 
-
         if (count($categories) > 0) {
             $travels = DateModel::findPublishedByCategories($categories, [
                 'order' => DateModel::fqid('departure', 'ASC'),
@@ -47,10 +46,13 @@ final class ListController extends AbstractContentElementController
 
         $pageModel = PageModel::findById($model->jumpTo);
 
-        foreach ($travels as $travel) {
-            if ($pageModel instanceof PageModel) {
-                $href = $this->urlGenerator->generate($pageModel, ['parameters' => '/' . $travel->alias, 'travel_code' => $travel->travel_code]);
-                $travel->href = $href;
+        if ($pageModel instanceof PageModel) {
+            foreach ($travels as $travel) {
+                $travel->href = $this->urlGenerator
+                    ->generate($pageModel, [
+                        'parameters' => '/' . $travel->alias,
+                        'travel_code' => $travel->travel_code
+                    ]);
             }
         }
 
