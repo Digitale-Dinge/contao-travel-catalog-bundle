@@ -7,12 +7,13 @@ namespace DigitaleDinge\TravelCatalogBundle\Controller;
 use Contao\ContentModel;
 use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
+use Contao\CoreBundle\Exception\PageNotFoundException;
 use Contao\CoreBundle\Routing\ContentUrlGenerator;
 use Contao\CoreBundle\Twig\FragmentTemplate;
 use Contao\PageModel;
 use Contao\StringUtil;
-use DigitaleDinge\TravelCatalogBundle\Model\DateModel;
 use DigitaleDinge\TravelCatalogBundle\Model\TravelRepository;
+use DigitaleDinge\TravelCatalogBundle\Util\Pagination;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -33,30 +34,31 @@ final class ListController extends AbstractContentElementController
     {
         $categories = StringUtil::deserialize($model->tc_categories, true);
 
-        if (count($categories) > 0) {
-            $travels = DateModel::findPublishedByCategories($categories, [
-                'order' => DateModel::fqid('departure', 'ASC'),
-            ]);
-        } else {
-            $travels = DateModel::findAllPublished([
-                'order' => DateModel::fqid('departure', 'ASC'),
-                'eager' => true
-            ]);
+        $total = $this->travelRepository->countAllPublishedByCategories($categories);
+
+        $pagination = new Pagination($total, $model->perPage, sprintf('page_%d', $model->id));
+
+        if ($pagination->isOutOfRange()) {
+            throw new PageNotFoundException('The pagination is out of range.');
         }
+
+        $travels = $this->travelRepository->findAllPublishedByCategories($categories, $pagination->getCurrentPage(), $pagination->getPerPage());
 
         $pageModel = PageModel::findById($model->jumpTo);
 
         if ($pageModel instanceof PageModel) {
-            foreach ($travels as $travel) {
-                $travel->href = $this->urlGenerator
+            foreach ($travels as &$travel) {
+                $travel['href'] = $this->urlGenerator
                     ->generate($pageModel, [
-                        'parameters' => '/' . $travel->alias,
-                        'travel_code' => $travel->travel_code
+                        'parameters' => '/' . $travel['alias'],
+                        'travel_code' => $travel['travel_code']
                     ]);
             }
+            unset($travel);
         }
 
         $template->set('travels', $travels);
+        $template->set('pagination', $pagination->generate());
 
         return $template->getResponse();
     }
