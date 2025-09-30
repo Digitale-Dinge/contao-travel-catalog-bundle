@@ -28,6 +28,7 @@ final class DetailController extends AbstractContentElementController
     {
     }
 
+    #[\Override]
     protected function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
         $travel = TravelModel::findByIdOrAlias(Input::get('auto_item'));

@@ -17,6 +17,7 @@ final class FilterController extends AbstractContentElementController
 
     public const string TYPE = 'travel_catalog_filter';
 
+    #[\Override]
     protected function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
         return $template->getResponse();

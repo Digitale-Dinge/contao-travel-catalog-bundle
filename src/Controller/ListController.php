@@ -30,6 +30,7 @@ final class ListController extends AbstractContentElementController
     {
     }
 
+    #[\Override]
     protected function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
         $categories = StringUtil::deserialize($model->tc_categories, true);

@@ -8,10 +8,10 @@ use Contao\Date;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
 
-class TravelRepository
+readonly class TravelRepository
 {
 
-    public function __construct(private readonly Connection $connection)
+    public function __construct(private  Connection $connection)
     {
     }
 
