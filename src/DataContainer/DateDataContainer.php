@@ -12,13 +12,6 @@ use Sqids\Sqids;
 final readonly class DateDataContainer
 {
 
-    public function loadDataContainer(string $table): void
-    {
-        if (DateModel::getTable() !== $table) {
-            return;
-        }
-    }
-
     #[AsCallback(DateModel::TABLE, 'fields.travel_code.save')]
     public function setTravelOnSave(?string $value, DataContainer $dc): string
     {

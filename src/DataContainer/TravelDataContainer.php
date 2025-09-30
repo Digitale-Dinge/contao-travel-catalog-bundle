@@ -23,14 +23,6 @@ final readonly class TravelDataContainer
     {
     }
 
-    #[AsHook('loadDataContainer')]
-    public function loadDataContainer(string $table): void
-    {
-        if (TravelModel::getTable() !== $table) {
-            return;
-        }
-    }
-
     #[AsCallback(TravelModel::TABLE, 'fields.alias.save')]
     public function setAliasOnSave(?string $value, DataContainer $dc): string
     {
