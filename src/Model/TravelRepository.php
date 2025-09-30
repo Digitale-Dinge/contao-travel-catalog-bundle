@@ -22,6 +22,20 @@ readonly class TravelRepository
         return $qb->executeQuery()->fetchAllAssociative();
     }
 
+    public function findAllCountriesFromPublishedTravelsByCategories(array $categories = []): array
+    {
+        $qb = $this->getQueryBuilder($categories);
+        $result = $qb->select('t.countries')
+            ->distinct()
+            ->fetchAllAssociative();
+
+        $arr = array_column($result, 'countries');
+
+        return array_values(array_unique(array_merge(
+            ...array_map(fn($s) => array_map('trim', explode(',', $s)), $arr)
+        )));
+    }
+
     public function countAllPublishedByCategories(array $categories = []): int
     {
         $qb = $this->getQueryBuilder($categories);

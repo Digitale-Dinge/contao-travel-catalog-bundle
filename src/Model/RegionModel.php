@@ -6,9 +6,9 @@ namespace DigitaleDinge\TravelCatalogBundle\Model;
 
 use Contao\Date;
 
-class CategoryModel extends AbstractModel
+class RegionModel extends AbstractModel
 {
-    public const string TABLE = 'tc_category';
+    public const string TABLE = 'tc_region';
 
     protected static $strTable = self::TABLE;
 

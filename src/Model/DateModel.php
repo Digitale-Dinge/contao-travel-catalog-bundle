@@ -6,9 +6,8 @@ namespace DigitaleDinge\TravelCatalogBundle\Model;
 
 use Contao\Date;
 use Contao\FilesModel;
-use Contao\Model;
 
-class DateModel extends Model
+class DateModel extends AbstractModel
 {
     public const string TABLE = 'tc_date';
 
@@ -69,16 +68,6 @@ class DateModel extends Model
     }
 
     public ?string $href = null;
-
-
-    public static function fqid(string $field, ?string $sorting = null): string
-    {
-        return sprintf('`%s`.`%s` %s',
-            self::TABLE,
-            $field,
-            $sorting ?? ''
-        );
-    }
 
     /**
      * @return self[]

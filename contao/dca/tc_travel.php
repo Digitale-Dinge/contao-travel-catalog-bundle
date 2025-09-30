@@ -7,6 +7,7 @@ use Contao\DataContainer;
 use Contao\DC_Table;
 use DigitaleDinge\TravelCatalogBundle\Model\CategoryModel;
 use DigitaleDinge\TravelCatalogBundle\Model\DateModel;
+use DigitaleDinge\TravelCatalogBundle\Model\RegionModel;
 use DigitaleDinge\TravelCatalogBundle\Model\TravelModel;
 use Doctrine\DBAL\Types\Types;
 
@@ -29,14 +30,14 @@ use Doctrine\DBAL\Types\Types;
                 pid;
                 name,alias,title,subtitle;
                 meta_title,meta_description;
-                countries,states,description;
+                countries,regions,description;
                 image;
                 published,start,stop;
             '
         ],
         'list' => [
             'label' => [
-                'fields' => ['name', 'title', 'subtitle'],
+                'fields' => ['name', 'title', 'subtitle', 'countries', 'regions'],
                 'showColumns' => true,
                 'showFirstOrderBy' => false
             ],
@@ -129,37 +130,29 @@ use Doctrine\DBAL\Types\Types;
                     'multiple' => true,
                     'includeBlankOption' => true,
                     'chosen' => true,
+                    'csv' => ',',
                     'tl_class' => 'w50'
                 ],
-                'sql' => "varchar(255) NOT NULL default ''"
+                'sql' => [
+                    'type' => Types::BLOB,
+                    'notnull' => false
+                ]
             ],
-            'states' => [
+            'regions' => [
                 'inputType' => 'select',
-                'options' => [
-                    'BW',
-                    'BY',
-                    'BE',
-                    'BB',
-                    'HH',
-                    'HE',
-                    'MV',
-                    'NI',
-                    'NW',
-                    'RP',
-                    'SL',
-                    'SN',
-                    'ST',
-                    'SH',
-                    'TH'
-                ],
+                'foreignKey' => RegionModel::fqid('name'),
                 'filter' => true,
                 'eval' => [
                     'multiple' => true,
                     'includeBlankOption' => true,
                     'chosen' => true,
+                    'csv' => ',',
                     'tl_class' => 'w50'
                 ],
-                'sql' => "varchar(255) NOT NULL default ''"
+                'sql' => [
+                    'type' => Types::BLOB,
+                    'notnull' => false
+                ]
             ],
             'description' => [
                 'inputType' => 'textarea',

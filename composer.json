@@ -13,14 +13,20 @@
     ],
     "require": {
         "php": "^8.4",
-        "contao/core-bundle": "^5.6",
+        "contao/core-bundle": "^5.3",
+        "doctrine/dbal": "^4.3",
         "sqids/sqids": "^0.5.0",
+        "symfony/dependency-injection": "^7.3",
+        "symfony/form": "^7.3",
+        "symfony/http-foundation": "^7.3",
+        "symfony/http-kernel": "^7.3",
         "twig/intl-extra": "^3.21"
     },
     "require-dev": {
-        "contao/manager-plugin": "^2.0",
         "carthage-software/mago": "^0.26.1",
-        "rector/rector": "^2.1"
+        "contao/manager-plugin": "^2.0",
+        "rector/rector": "^2.1",
+        "shipmonk/composer-dependency-analyser": "^1.8"
     },
     "conflict": {
         "contao/manager-plugin": "<2.0 || >=3.0"
@@ -34,6 +40,7 @@
         "contao-manager-plugin": "DigitaleDinge\\TravelCatalogBundle\\DigitaleDingeTravelCatalogBundle"
     },
     "config": {
+        "sort-packages": true,
         "allow-plugins": {
             "carthage-software/mago": true,
             "contao-components/installer": false,

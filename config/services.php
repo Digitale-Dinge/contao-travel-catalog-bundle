@@ -7,6 +7,7 @@ use DigitaleDinge\TravelCatalogBundle\Controller\FilterController;
 use DigitaleDinge\TravelCatalogBundle\Controller\ListController;
 use DigitaleDinge\TravelCatalogBundle\DataContainer\DateDataContainer;
 use DigitaleDinge\TravelCatalogBundle\DataContainer\TravelDataContainer;
+use DigitaleDinge\TravelCatalogBundle\Model\RegionRepository;
 use DigitaleDinge\TravelCatalogBundle\Model\TravelRepository;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
@@ -27,5 +28,6 @@ return static function (ContainerConfigurator $container): void {
         ->set(DetailController::class)
 
         ->set(TravelRepository::class)
+        ->set(RegionRepository::class)
     ;
 };

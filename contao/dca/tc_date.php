@@ -74,7 +74,7 @@ use Doctrine\DBAL\Types\Types;
                     'type' => Types::FLOAT,
                     'unsigned' => true,
                     'notnull' => true,
-                    'default' => 0,
+                    'default' => 0.00,
                 ]
             ],
             'old_price' => [
