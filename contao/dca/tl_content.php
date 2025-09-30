@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use DigitaleDinge\TravelCatalogBundle\Controller\DetailController;
+use DigitaleDinge\TravelCatalogBundle\Controller\FilterController;
 use DigitaleDinge\TravelCatalogBundle\Controller\ListController;
 use DigitaleDinge\TravelCatalogBundle\Model\CategoryModel;
 
@@ -21,6 +23,22 @@ use DigitaleDinge\TravelCatalogBundle\Model\CategoryModel;
         {title_legend},title,name,headline,type;
         tc_categories;
         jumpTo,perPage,numberOfItems,size;
+        {template_legend:hide},customTpl;
+        {protected_legend:hide},protected;
+        {expert_legend:hide},guests,cssID
+    ';
+
+    $GLOBALS['TL_DCA'][$table]['palettes'][DetailController::TYPE] = '
+        {title_legend},title,name,headline,type;
+        {template_legend:hide},customTpl;
+        {protected_legend:hide},protected;
+        {expert_legend:hide},guests,cssID
+    ';
+
+    $GLOBALS['TL_DCA'][$table]['palettes'][FilterController::TYPE] = '
+        {title_legend},title,name,headline,type;
+        tc_categories;
+        jumpTo;
         {template_legend:hide},customTpl;
         {protected_legend:hide},protected;
         {expert_legend:hide},guests,cssID
