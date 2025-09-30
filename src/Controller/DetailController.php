@@ -15,7 +15,6 @@ use DigitaleDinge\TravelCatalogBundle\Model\DateModel;
 use DigitaleDinge\TravelCatalogBundle\Model\TravelModel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Tastaturberuf\ContaoAnystoresBundle\Event\DetailControllerEvent;
 
 #[AsContentElement(self::TYPE, 'travel_catalog')]
 final class DetailController extends AbstractContentElementController

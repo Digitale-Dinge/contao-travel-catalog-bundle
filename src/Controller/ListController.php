@@ -55,6 +55,7 @@ final class ListController extends AbstractContentElementController
                         'travel_code' => $travel['travel_code']
                     ]);
             }
+
             unset($travel);
         }
 

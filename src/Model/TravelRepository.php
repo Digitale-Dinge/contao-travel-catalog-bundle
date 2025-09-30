@@ -52,7 +52,7 @@ readonly class TravelRepository
             $qb->setMaxResults($limit);
         }
 
-        if (count($categories) > 0) {
+        if ($categories !== []) {
             $qb->andWhere('t.pid IN (:categories)');
             $qb->setParameter('categories', implode(',', $categories));
         }

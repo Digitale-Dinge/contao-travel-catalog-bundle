@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use Rector\CodeQuality\Rector\Identical\FlipTypeControlToUseExclusiveTypeRector;
+use Rector\CodingStyle\Rector\Encapsed\EncapsedStringsToSprintfRector;
+use Rector\CodingStyle\Rector\Encapsed\WrapEncapsedVariableInCurlyBracesRector;
 use Rector\Config\RectorConfig;
 
 return RectorConfig::configure()
@@ -12,6 +15,21 @@ return RectorConfig::configure()
     ])
     // uncomment to reach your current PHP version
     // ->withPhpSets()
-    ->withTypeCoverageLevel(0)
-    ->withDeadCodeLevel(0)
-    ->withCodeQualityLevel(0);
+    ->withSkip([
+        FlipTypeControlToUseExclusiveTypeRector::class => [
+            __DIR__ . '/src/Controller/DetailController.php'
+        ],
+        EncapsedStringsToSprintfRector::class => [
+            __DIR__ . '/src/Model/*'
+        ],
+        WrapEncapsedVariableInCurlyBracesRector::class => [
+            __DIR__ . '/src/Model/*'
+        ]
+    ])
+    ->withPreparedSets(
+        true,
+        true,
+        true,
+        true,
+    #true,
+    );
