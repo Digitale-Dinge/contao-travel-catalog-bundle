@@ -18,7 +18,9 @@
         "twig/intl-extra": "^3.21"
     },
     "require-dev": {
-        "contao/manager-plugin": "^2.0"
+        "contao/manager-plugin": "^2.0",
+        "carthage-software/mago": "^0.26.1",
+        "rector/rector": "^2.1"
     },
     "conflict": {
         "contao/manager-plugin": "<2.0 || >=3.0"
@@ -30,5 +32,13 @@
     },
     "extra": {
         "contao-manager-plugin": "DigitaleDinge\\TravelCatalogBundle\\DigitaleDingeTravelCatalogBundle"
+    },
+    "config": {
+        "allow-plugins": {
+            "carthage-software/mago": true,
+            "contao-components/installer": false,
+            "php-http/discovery": false,
+            "contao/manager-plugin": false
+        }
     }
 }
