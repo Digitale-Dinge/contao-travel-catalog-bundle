@@ -15,7 +15,7 @@ final readonly class DateDataContainer
     #[AsCallback(DateModel::TABLE, 'fields.travel_code.save')]
     public function setTravelOnSave(?string $value, DataContainer $dc): string
     {
-        if ($value) {
+        if ($value !== null) {
             return $value;
         }
 

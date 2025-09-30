@@ -24,6 +24,9 @@ return RectorConfig::configure()
         ],
         WrapEncapsedVariableInCurlyBracesRector::class => [
             __DIR__ . '/src/Model/*'
+        ],
+        \Rector\Strict\Rector\Ternary\DisallowedShortTernaryRuleFixerRector::class => [
+            __DIR__ . '/src/Util/Pagination.php'
         ]
     ])
     ->withPreparedSets(
@@ -31,5 +34,15 @@ return RectorConfig::configure()
         true,
         true,
         true,
-    #true,
+        true,
+        false,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
     );

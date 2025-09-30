@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace DigitaleDinge\TravelCatalogBundle\DataContainer;
 
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
-use Contao\CoreBundle\DependencyInjection\Attribute\AsHook;
 use Contao\CoreBundle\Intl\Countries;
 use Contao\CoreBundle\Slug\Slug;
 use Contao\DataContainer;
@@ -26,7 +25,7 @@ final readonly class TravelDataContainer
     #[AsCallback(TravelModel::TABLE, 'fields.alias.save')]
     public function setAliasOnSave(?string $value, DataContainer $dc): string
     {
-        if ($value) {
+        if ($value !== null) {
             return $value;
         }
 
