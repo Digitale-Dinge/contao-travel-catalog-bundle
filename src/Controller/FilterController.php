@@ -9,6 +9,7 @@ use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController
 use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
 use Contao\CoreBundle\Intl\Countries;
 use Contao\CoreBundle\Twig\FragmentTemplate;
+use DigitaleDinge\TravelCatalogBundle\FormData\FilterData;
 use DigitaleDinge\TravelCatalogBundle\Model\RegionRepository;
 use DigitaleDinge\TravelCatalogBundle\Model\TravelRepository;
 use Symfony\Component\Form\ChoiceList\Loader\CallbackChoiceLoader;
@@ -54,7 +55,7 @@ final class FilterController extends AbstractContentElementController
 
     private function getFormBuilder(): FormBuilderInterface
     {
-        return $this->createFormBuilder(null, [
+        return $this->createFormBuilder(new FilterData(), [
             'method' => 'get',
             'csrf_protection' => false
         ])

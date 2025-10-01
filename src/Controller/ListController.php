@@ -12,6 +12,7 @@ use Contao\CoreBundle\Routing\ContentUrlGenerator;
 use Contao\CoreBundle\Twig\FragmentTemplate;
 use Contao\PageModel;
 use Contao\StringUtil;
+use DigitaleDinge\TravelCatalogBundle\FormData\FilterData;
 use DigitaleDinge\TravelCatalogBundle\Model\TravelRepository;
 use DigitaleDinge\TravelCatalogBundle\Util\Pagination;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,19 +34,46 @@ final class ListController extends AbstractContentElementController
     #[\Override]
     protected function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
-        $categories = StringUtil::deserialize($model->tc_categories, true);
+        $filterData = $this->getFormData($request, $model);
 
-        $total = $this->travelRepository->countAllPublishedByCategories($categories);
+        $template->set('travels', $this->getTravels($filterData, $model));
+        $template->set('total', $filterData->limit);
+        $template->set('pagination', $this->getPagination($filterData, $model->id)->generate());
 
-        $pagination = new Pagination($total, $model->perPage, sprintf('page_%d', $model->id));
+        return $template->getResponse();
+    }
+
+    private function getFormData(Request $request, ContentModel $contentModel): FilterData
+    {
+        $filterData = $request->attributes->get('tc_form')?->getData() ?? new FilterData;
+
+        $filterData->categories = StringUtil::deserialize($contentModel->tc_categories, true);
+        $filterData->perPage = $contentModel->perPage ?? 0;
+        $filterData->limit = $contentModel->numberOfItems ?: $this->travelRepository->countAllPublished($filterData);
+
+        return $filterData;
+    }
+
+    private function getPagination(FilterData $filterData, int $modelId): Pagination
+    {
+        $pagination = new Pagination(
+            $filterData->limit,
+            $filterData->perPage,
+            sprintf('page_%d', $modelId)
+        );
 
         if ($pagination->isOutOfRange()) {
             throw new PageNotFoundException('The pagination is out of range.');
         }
 
-        $travels = $this->travelRepository->findAllPublishedByCategories($categories, $pagination->getCurrentPage(), $pagination->getPerPage());
+        return $pagination;
+    }
 
-        $pageModel = PageModel::findById($model->jumpTo);
+    private function getTravels(FilterData $filterData, ContentModel $contentModel): array
+    {
+        $travels = $this->travelRepository->findAllPublished($filterData);
+
+        $pageModel = PageModel::findById($contentModel->jumpTo);
 
         if ($pageModel instanceof PageModel) {
             foreach ($travels as &$travel) {
@@ -59,10 +87,7 @@ final class ListController extends AbstractContentElementController
             unset($travel);
         }
 
-        $template->set('travels', $travels);
-        $template->set('pagination', $pagination->generate());
-
-        return $template->getResponse();
+        return $travels;
     }
 
 }

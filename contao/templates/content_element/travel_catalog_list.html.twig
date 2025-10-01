@@ -1,6 +1,7 @@
 <h1>List</h1>
 
 {% for travel in travels %}
+    <h3>{{ travel.name }}</h3>
     <dl>
         <dt>travel.id (Achtung: Das ist die <code>tc_date.id</code>)</dt>
         <dd>{{ travel.id }}</dd>
@@ -29,7 +30,7 @@
         <dd>{{ dump(travel.isOneDayTrip) }}</dd>
         #}
         <dt>travel.description</dt>
-        <dd>{{ travel.description|sanitize_html }}</dd>
+        <dd>{{ travel.description|default|sanitize_html }}</dd>
         {#
         <dt>travel.content</dt>
         <dd>{{ travel.content|raw }}</dd>

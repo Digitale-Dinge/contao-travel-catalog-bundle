@@ -25,7 +25,7 @@ final readonly class TravelDataContainer
     #[AsCallback(TravelModel::TABLE, 'fields.alias.save')]
     public function setAliasOnSave(?string $value, DataContainer $dc): string
     {
-        if ($value !== null) {
+        if ($value) {
             return $value;
         }
 

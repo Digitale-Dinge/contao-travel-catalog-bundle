@@ -4,27 +4,37 @@ declare(strict_types=1);
 
 namespace DigitaleDinge\TravelCatalogBundle\Model;
 
+use Contao\CoreBundle\Routing\ScopeMatcher;
 use Contao\Date;
+use DigitaleDinge\TravelCatalogBundle\FormData\FilterData;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 readonly class TravelRepository
 {
 
-    public function __construct(private  Connection $connection)
+    public function __construct(
+        private Connection $connection,
+        private RequestStack $requestStack,
+        private ScopeMatcher $scopeMatcher,
+    )
     {
     }
 
-    public function findAllPublishedByCategories(array $categories, int $page = 1, int $limit = 0): array
+    public function findAllPublished(FilterData $filterData): array
     {
-        $qb = $this->getQueryBuilder($categories, $page, $limit);
+        $qb = $this->getQueryBuilder($filterData);
 
         return $qb->executeQuery()->fetchAllAssociative();
     }
 
     public function findAllCountriesFromPublishedTravelsByCategories(array $categories = []): array
     {
-        $qb = $this->getQueryBuilder($categories);
+        $filterData = new FilterData;
+        $filterData->categories = $categories;
+
+        $qb = $this->getQueryBuilder($filterData);
         $result = $qb->select('t.countries')
             ->distinct()
             ->fetchAllAssociative();
@@ -36,16 +46,16 @@ readonly class TravelRepository
         )));
     }
 
-    public function countAllPublishedByCategories(array $categories = []): int
+    public function countAllPublished(FilterData $filterData): int
     {
-        $qb = $this->getQueryBuilder($categories);
+        $qb = $this->getQueryBuilder($filterData);
 
         $qb->select('COUNT(p.id)');
 
         return $qb->executeQuery()->fetchOne();
     }
 
-    protected function getQueryBuilder(array $categories = [], int $page = 1, int $limit = 0): QueryBuilder
+    protected function getQueryBuilder(FilterData $filterData): QueryBuilder
     {
         $qb = $this->connection->createQueryBuilder();
 
@@ -60,16 +70,54 @@ readonly class TravelRepository
                 "p.start = '' OR p.start <= :now",
                 "p.stop = '' OR p.stop > :now",
             )->setParameter('now', Date::floorToMinute())
-            ->setFirstResult(($page - 1) * $limit);
+            ->setFirstResult(($filterData->page - 1) * $filterData->perPage);
 
-        if ($limit > 0) {
-            $qb->setMaxResults($limit);
+        if ($filterData->categories !== []) {
+            $qb->andWhere('FIND_IN_SET(t.pid, :categories)');
+            $qb->setParameter('categories', implode(',', $filterData->categories));
         }
 
-        if ($categories !== []) {
-            $qb->andWhere('t.pid IN (:categories)');
-            $qb->setParameter('categories', implode(',', $categories));
+        if ($filterData->name) {
+            $qb->andWhere($qb->expr()->or(
+                $qb->expr()->like('t.name', ':name'),
+                $qb->expr()->eq('p.travel_code', ':travel_code'),
+            ));
+            $qb->setParameter('name', '%' . $filterData->name . '%');
+            $qb->setParameter('travel_code', $filterData->name);
         }
+
+        if ($filterData->date) {
+            $qb->andWhere('DATE_FORMAT(FROM_UNIXTIME(p.departure), "%Y-%m-%d") = :date');
+            $qb->setParameter('date', $filterData->date->format('Y-m-d'));
+        }
+
+        if ($filterData->country !== []) {
+            $ors = [];
+            foreach ($filterData->country as $countryCode) {
+                $ors[] = "FIND_IN_SET('$countryCode', t.countries) > 0";
+            }
+
+            $qb->andWhere($qb->expr()->or(...$ors));
+
+            unset($ors);
+        }
+
+        if ($filterData->region !== []) {
+            $ors = [];
+            foreach ($filterData->region as $regionId) {
+                $regionId = (int)$regionId;
+                $ors[] = "FIND_IN_SET($regionId, t.regions) > 0";
+            }
+            $qb->andWhere($qb->expr()->or(...$ors));
+
+            unset($ors);
+        }
+
+        if ($filterData->perPage > 0) {
+            $qb->setMaxResults($filterData->perPage);
+        }
+
+        $qb->orderBy('p.departure', 'ASC');
 
         return $qb;
     }
