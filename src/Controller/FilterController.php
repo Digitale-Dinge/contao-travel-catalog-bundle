@@ -13,6 +13,7 @@ use DigitaleDinge\TravelCatalogBundle\FormData\FilterData;
 use DigitaleDinge\TravelCatalogBundle\Model\RegionRepository;
 use DigitaleDinge\TravelCatalogBundle\Model\TravelRepository;
 use Symfony\Component\Form\ChoiceList\Loader\CallbackChoiceLoader;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -62,6 +63,7 @@ final class FilterController extends AbstractContentElementController
             ->add('name', TextType::class, [
                 'required' => false,
             ])
+            ->add('oneDayTrip', CheckboxType::class, [])
             ->add('date', DateType::class, [
                 'required' => false,
             ])

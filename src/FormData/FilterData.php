@@ -8,6 +8,7 @@ class FilterData
 {
 
     public ?string $name = null;
+    public bool $oneDayTrip = false;
     public ?\DateTimeInterface $date = null;
     public array $country = [];
     public array $region = [];

@@ -86,6 +86,10 @@ readonly class TravelRepository
             $qb->setParameter('travel_code', $filterData->name);
         }
 
+        if ($filterData->oneDayTrip) {
+            $qb->andWhere('DATE_FORMAT(FROM_UNIXTIME(p.departure), "%Y-%m-%d") = DATE_FORMAT(FROM_UNIXTIME(p.return), "%Y-%m-%d")');
+        }
+
         if ($filterData->date) {
             $qb->andWhere('DATE_FORMAT(FROM_UNIXTIME(p.departure), "%Y-%m-%d") = :date');
             $qb->setParameter('date', $filterData->date->format('Y-m-d'));
