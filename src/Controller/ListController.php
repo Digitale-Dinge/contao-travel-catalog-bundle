@@ -10,9 +10,11 @@ use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
 use Contao\CoreBundle\Exception\PageNotFoundException;
 use Contao\CoreBundle\Routing\ContentUrlGenerator;
 use Contao\CoreBundle\Twig\FragmentTemplate;
+use Contao\Model\Collection;
 use Contao\PageModel;
 use Contao\StringUtil;
 use DigitaleDinge\TravelCatalogBundle\FormData\FilterData;
+use DigitaleDinge\TravelCatalogBundle\Model\DateModel;
 use DigitaleDinge\TravelCatalogBundle\Model\TravelRepository;
 use DigitaleDinge\TravelCatalogBundle\Util\Pagination;
 use Symfony\Component\HttpFoundation\Request;
@@ -69,18 +71,22 @@ final class ListController extends AbstractContentElementController
         return $pagination;
     }
 
-    private function getTravels(FilterData $filterData, ContentModel $contentModel): array
+    private function getTravels(FilterData $filterData, ContentModel $contentModel): Collection
     {
-        $travels = $this->travelRepository->findAllPublished($filterData);
+        $ids = $this->travelRepository->findAllPublished($filterData);
+
+        $ids = array_column($ids, 'id');
+
+        $travels = DateModel::findMultipleByIds($ids);
 
         $pageModel = PageModel::findById($contentModel->jumpTo);
 
         if ($pageModel instanceof PageModel) {
             foreach ($travels as &$travel) {
-                $travel['href'] = $this->urlGenerator
+                $travel->href = $this->urlGenerator
                     ->generate($pageModel, [
-                        'parameters' => '/' . $travel['alias'],
-                        'travel_code' => $travel['travel_code']
+                        'parameters' => '/' . $travel->alias,
+                        'travel_code' => $travel->travel_code
                     ]);
             }
 

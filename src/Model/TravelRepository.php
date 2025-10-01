@@ -59,36 +59,7 @@ readonly class TravelRepository
     {
         $qb = $this->connection->createQueryBuilder();
 
-        $qb->select(
-            't.id AS travel_id',
-            't.tstamp AS travel_update',
-            't.name',
-            't.alias',
-            't.title',
-            't.subtitle',
-            't.description',
-            't.meta_title',
-            't.meta_description',
-            't.image',
-            't.published AS travel_published',
-            't.start AS travel_start',
-            't.stop AS travel_stop',
-            't.countries',
-            't.pid AS category',
-            't.regions',
-            'p.id AS price_id',
-            'p.tstamp AS price_update',
-            'p.travel_code',
-            'p.published AS price_published',
-            'p.start AS price_start',
-            'p.stop AS price_stop',
-            'p.price',
-            'p.old_price',
-            'p.departure',
-            'p.return',
-            'p.departure_text',
-            'p.return_text',
-        )
+        $qb->select('p.id')
             ->from(DateModel::getTable(), 'p')
             ->rightJoin('p', TravelModel::getTable(), 't', 'p.pid = t.id')
             ->where(

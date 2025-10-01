@@ -58,7 +58,7 @@ use Doctrine\DBAL\Types\Types;
                 'relation' => [
                     'table' => TravelModel::getTable(),
                     'type' => 'hasOne',
-                    'load' => 'lazy',
+                    'load' => 'eager',
                 ],
                 'sql' => "int(10) unsigned NOT NULL default '0'"
             ],
