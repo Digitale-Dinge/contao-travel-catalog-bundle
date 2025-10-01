@@ -1,46 +1,11 @@
 <h1>List</h1>
 
 {% for travel in travels %}
-    <h3>{{ travel.name }}</h3>
-    <dl>
-        <dt>travel.id (Achtung: Das ist die <code>tc_date.id</code>)</dt>
-        <dd>{{ travel.id }}</dd>
-        <dt>travel.price</dt>
-        <dd>{{ travel.price|format_currency('EUR') }}</dd>
-        <dt>travel.tstamp (Letztes Update der Preisdaten)</dt>
-        <dd>{{ travel.tstamp|date }}</dd>
-        <dt>travel.href</dt>
-        <dd><a href="{{ travel.href }}">{{ travel.href }}</a></dd>
-        <dt>travel.name</dt>
-        <dd>{{ travel.name }}</dd>
-        <dt>travel.alias</dt>
-        <dd>{{ travel.alias }}</dd>
-        <dt>travel.title</dt>
-        <dd>{{ travel.title }}</dd>
-        <dt>travel.subtitle</dt>
-        <dd>{{ travel.subtitle }}</dd>
-        <dt>travel.travel_code</dt>
-        <dd>{{ travel.travel_code }}</dd>
-        <dt>travel.departure</dt>
-        <dd>{{ travel.departure|date }}</dd>
-        <dt>travel.return</dt>
-        <dd>{{ travel.return|date }}</dd>
-        {#
-        <dt>travel.isOneDayTrip</dt>
-        <dd>{{ dump(travel.isOneDayTrip) }}</dd>
-        #}
-        <dt>travel.description</dt>
-        <dd>{{ travel.description|default|sanitize_html }}</dd>
-        {#
-        <dt>travel.content</dt>
-        <dd>{{ travel.content|raw }}</dd>
-        #}
-    </dl>
+    <h3>{{ travel.name }} ({{ travel.travel_code }})</h3>
+    <a href="{{ travel.href }}">{{ travel.href }}</a>
     {{ dump(travel) }}
 {% else %}
     Keine Reisen gefunden.
 {% endfor %}
-
-{{ dump() }}
 
 {{ pagination|raw }}

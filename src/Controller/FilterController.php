@@ -63,7 +63,9 @@ final class FilterController extends AbstractContentElementController
             ->add('name', TextType::class, [
                 'required' => false,
             ])
-            ->add('oneDayTrip', CheckboxType::class, [])
+            ->add('oneDayTrip', CheckboxType::class, [
+                'required' => false,
+            ])
             ->add('date', DateType::class, [
                 'required' => false,
             ])
