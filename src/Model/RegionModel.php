@@ -15,7 +15,7 @@ class RegionModel extends AbstractModel
     }
 
     public string $name {
-        get => $this->getRelated('pid')->name;
+        get => $this->__get('name');
     }
 
 }
