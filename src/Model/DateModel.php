@@ -44,6 +44,10 @@ class DateModel extends AbstractModel
         get => $this->getRelated('pid')->countries;
     }
 
+    public $regions {
+        get => $this->getRelated('pid')->regions;
+    }
+
     public string $description {
         get => $this->getRelated('pid')->description ?? '';
     }

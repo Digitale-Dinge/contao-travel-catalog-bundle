@@ -26,3 +26,4 @@ $GLOBALS['BE_MOD']['travel_catalog'] = [
 $GLOBALS['TL_MODELS'][CategoryModel::getTable()] = CategoryModel::class;
 $GLOBALS['TL_MODELS'][TravelModel::getTable()] = TravelModel::class;
 $GLOBALS['TL_MODELS'][DateModel::getTable()] = DateModel::class;
+$GLOBALS['TL_MODELS'][RegionModel::getTable()] = RegionModel::class;
