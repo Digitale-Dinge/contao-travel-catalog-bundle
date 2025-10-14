@@ -30,8 +30,11 @@ class TravelModel extends Model
         get => $this->__get('name') ?? '';
     }
 
-    public string $alias {
-        get => $this->__get('alias') ?? '';
+    public ?string $alias {
+        get => $this->__get('alias');
+        set {
+            $this->__set('alias', $value);
+        }
     }
 
     public string $title {

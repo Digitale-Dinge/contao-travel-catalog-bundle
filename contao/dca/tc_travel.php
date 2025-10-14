@@ -121,6 +121,7 @@ use Doctrine\DBAL\Types\Types;
                 'eval' => [
                     'rgxp' => 'alias',
                     'maxlength' => 255,
+                    'doNotCopy' => true,
                     'tl_class' => 'w50'
                 ],
                 'sql' => [

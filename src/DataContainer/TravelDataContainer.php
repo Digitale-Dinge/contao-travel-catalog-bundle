@@ -43,6 +43,28 @@ final readonly class TravelDataContainer
             throw new \Exception('The travel name is required to generate an alias.');
         }
 
+        return $this->generateAlias($name, $dc->id);
+    }
+
+    #[AsCallback(TravelModel::TABLE, 'fields.countries.options')]
+    public function setCountyOptions(): array
+    {
+        return $this->countries->getCountries();
+    }
+
+    #[AsCallback(TravelModel::TABLE, 'config.oncopy')]
+    public function setAliasOnCopy(int $id, DC_Table $dc): void
+    {
+        if (null === $model = TravelModel::findByPk($id)) {
+            throw new \RuntimeException(sprintf('The travel model with ID "%s" does not exist.', $id));
+        }
+
+        $model->alias = $this->generateAlias($model->name, $id);
+        $model->save();
+    }
+
+    private function generateAlias(string $name, int $id): string
+    {
         $alias = $this->slugGenerator->generate($name);
 
         $statement = $this->connection
@@ -53,13 +75,7 @@ final readonly class TravelDataContainer
             return $alias;
         }
 
-        return sprintf('%s-%s', new Sqids('abcdefghijklmnopqrstuvwxyz', 4)->encode([$dc->id]), $alias);
-    }
-
-    #[AsCallback(TravelModel::TABLE, 'fields.countries.options')]
-    public function setCountyOptions(): array
-    {
-        return $this->countries->getCountries();
+        return sprintf('%s-%s', $alias, new Sqids('abcdefghijklmnopqrstuvwxyz', 4)->encode([$id]));
     }
 
 }
