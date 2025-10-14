@@ -46,6 +46,12 @@ use Doctrine\DBAL\Types\Types;
                 'mode' => DataContainer::MODE_SORTABLE,
                 'panelLayout' => 'sort,filter;search,limit'
             ],
+            'operations' => [
+                'edit',
+                'delete',
+                'toggle',
+                'show'
+            ]
         ],
         'fields' => [
             'id' => [
