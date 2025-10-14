@@ -17,8 +17,11 @@ class DateModel extends AbstractModel
         get => \DateTimeImmutable::createFromTimestamp($this->__get('tstamp'));
     }
 
-    public string $code {
+    public ?string $code {
         get => $this->__get('travel_code');
+        set {
+            $this->__set('travel_code', $value);
+        }
     }
 
     public string $name {
