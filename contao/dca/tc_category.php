@@ -13,6 +13,7 @@ use Doctrine\DBAL\Types\Types;
             'dataContainer' => DC_Table::class,
             'enableVersioning' => true,
             'ctable' => [TravelModel::getTable()],
+            'markAsCopy' => 'name',
             'sql' => [
                 'keys' => [
                     'id' => 'primary'

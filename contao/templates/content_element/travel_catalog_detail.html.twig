@@ -13,11 +13,21 @@
     <dd>{{ travel.title }}</dd>
     <dt>travel.subtitle</dt>
     <dd>{{ travel.subtitle }}</dd>
+    <dt>travel.image</dt>
+    <dd>{{ dump(travel.image) }}</dd>
     <dt>travel.description</dt>
     <dd>{{ travel.description|sanitize_html }}</dd>
     <dt>travel.content</dt>
     <dd>{{ travel.content|raw }}</dd>
 </dl>
+
+{{ dump(travel.regions) }}
+
+{% for key, country in travel.countries %}
+    {{ key }} => {{ country }}
+{% else %}
+    Keine Länder vorhanden.
+{% endfor %}
 
 <h2>Prices</h2>
 

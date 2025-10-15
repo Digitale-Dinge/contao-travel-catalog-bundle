@@ -13,7 +13,7 @@ use Doctrine\DBAL\Types\Types;
             'dataContainer' => DC_Table::class,
             'enableVersioning' => true,
             'ptable' => TravelModel::getTable(),
-            'doNotCopyRecords' => true,
+            #'doNotCopyRecords' => true,
             'sql' => [
                 'keys' => [
                     'id' => 'primary',
@@ -46,6 +46,12 @@ use Doctrine\DBAL\Types\Types;
                 'mode' => DataContainer::MODE_SORTABLE,
                 'panelLayout' => 'sort,filter;search,limit'
             ],
+            'operations' => [
+                'edit',
+                'delete',
+                'toggle',
+                'show'
+            ]
         ],
         'fields' => [
             'id' => [
@@ -96,6 +102,7 @@ use Doctrine\DBAL\Types\Types;
                 'eval' => [
                     'unique' => true,
                     'maxlength' => 16,
+                    'doNotCopy' => true,
                     'tl_class' => 'w25'
                 ],
                 'sql' => "varchar(16) NULL"

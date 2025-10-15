@@ -3,6 +3,10 @@
 {% for travel in travels %}
     <h3>{{ travel.name }} ({{ travel.travel_code }})</h3>
     <a href="{{ travel.href }}">{{ travel.href }}</a>
+
+    {{ dump(travel.countries) }}
+    {{ dump(travel.regions) }}
+
     {{ dump(travel) }}
 {% else %}
     Keine Reisen gefunden.

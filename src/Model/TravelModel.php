@@ -7,7 +7,9 @@ namespace DigitaleDinge\TravelCatalogBundle\Model;
 use Contao\ContentModel;
 use Contao\Controller;
 use Contao\Date;
+use Contao\FilesModel;
 use Contao\Model;
+use Contao\System;
 
 class TravelModel extends Model
 {
@@ -30,8 +32,11 @@ class TravelModel extends Model
         get => $this->__get('name') ?? '';
     }
 
-    public string $alias {
-        get => $this->__get('alias') ?? '';
+    public ?string $alias {
+        get => $this->__get('alias');
+        set {
+            $this->__set('alias', $value);
+        }
     }
 
     public string $title {
@@ -52,6 +57,35 @@ class TravelModel extends Model
 
     public ?string $metaDescription {
         get => $this->__get('meta_description');
+    }
+
+    public ?FilesModel $image {
+        get => FilesModel::findByUuid($this->__get('image'));
+    }
+
+    public array $countries {
+        get {
+            if (null === $this->__get('countries')) {
+                return [];
+            }
+
+            static $countries = System::getContainer()->get('contao.intl.countries')->getCountries();
+
+            $currentCountries = array_flip(explode(',', $this->__get('countries')));
+
+            return array_intersect_key($countries, $currentCountries);
+        }
+    }
+
+    public array $regions {
+        get {
+            $ids = $this->__get('regions');
+            if (!$ids) {
+                return [];
+            }
+
+            return RegionModel::findMultipleByIds(explode(',', $this->__get('regions')))?->getModels() ?? [];
+        }
     }
 
     public ?string $content {

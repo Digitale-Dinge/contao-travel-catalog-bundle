@@ -41,6 +41,9 @@ readonly class TravelRepository
 
         $arr = array_column($result, 'countries');
 
+        // remove null value
+        $arr = array_filter($arr, fn($s) => $s !== null);
+        
         return array_values(array_unique(array_merge(
             ...array_map(fn($s) => array_map('trim', explode(',', $s)), $arr)
         )));

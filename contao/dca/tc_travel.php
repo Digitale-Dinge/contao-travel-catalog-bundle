@@ -21,7 +21,8 @@ use Doctrine\DBAL\Types\Types;
             'markAsCopy' => 'name',
             'sql' => [
                 'keys' => [
-                    'id' => 'primary'
+                    'id' => 'primary',
+                    'alias' => 'unique'
                 ]
             ]
         ],
@@ -119,10 +120,16 @@ use Doctrine\DBAL\Types\Types;
             'alias' => [
                 'inputType' => 'text',
                 'eval' => [
+                    'rgxp' => 'alias',
                     'maxlength' => 255,
+                    'doNotCopy' => true,
                     'tl_class' => 'w50'
                 ],
-                'sql' => "varchar(255) NOT NULL default ''"
+                'sql' => [
+                    'type' => Types::STRING,
+                    'length' => 255,
+                    'notnull' => false,
+                ]
             ],
             'countries' => [
                 'inputType' => 'select',
