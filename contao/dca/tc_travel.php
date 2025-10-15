@@ -93,7 +93,8 @@ use Doctrine\DBAL\Types\Types;
                 'search' => true,
                 'eval' => [
                     'maxlength' => 255,
-                    'tl_class' => 'w50'
+                    'tl_class' => 'w50',
+										'allowHtml' => true
                 ],
                 'sql' => "varchar(255) NOT NULL default ''"
             ],
