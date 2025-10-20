@@ -73,13 +73,15 @@ final class ListController extends AbstractContentElementController
         return $pagination;
     }
 
-    private function getTravels(FilterData $filterData, ContentModel $contentModel): Collection
+    private function getTravels(FilterData $filterData, ContentModel $contentModel): array
     {
         $ids = $this->travelRepository->findAllPublished($filterData);
 
         $ids = array_column($ids, 'id');
 
-        $travels = DateModel::findMultipleByIds($ids);
+        if (null === $travels = DateModel::findMultipleByIds($ids)) {
+            return [];
+        }
 
         $pageModel = PageModel::findById($contentModel->jumpTo);
 
@@ -95,7 +97,7 @@ final class ListController extends AbstractContentElementController
             unset($travel);
         }
 
-        return $travels;
+        return $travels->getModels();
     }
 
 }
