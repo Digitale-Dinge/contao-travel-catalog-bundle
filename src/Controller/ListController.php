@@ -18,6 +18,7 @@ use DigitaleDinge\TravelCatalogBundle\Model\DateModel;
 use DigitaleDinge\TravelCatalogBundle\Model\TravelRepository;
 use DigitaleDinge\TravelCatalogBundle\Util\Pagination;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 
 #[AsContentElement(self::TYPE, 'travel_catalog')]
@@ -28,7 +29,8 @@ final class ListController extends AbstractContentElementController
 
     public function __construct(
         private readonly TravelRepository $travelRepository,
-        private readonly ContentUrlGenerator $urlGenerator
+        private readonly ContentUrlGenerator $urlGenerator,
+        private readonly RequestStack $requestStack,
     )
     {
     }
@@ -36,7 +38,7 @@ final class ListController extends AbstractContentElementController
     #[\Override]
     protected function getResponse(FragmentTemplate $template, ContentModel $model, Request $request): Response
     {
-        $filterData = $this->getFormData($request, $model);
+        $filterData = $this->getFormData($this->requestStack->getMainRequest(), $model);
 
         $template->set('travels', $this->getTravels($filterData, $model));
         $template->set('total', $filterData->limit);
