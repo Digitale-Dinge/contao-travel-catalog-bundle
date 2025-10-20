@@ -33,9 +33,9 @@ final readonly class DateDataContainer
         return $this->generateTravelCode($dc->id);
     }
 
-    private function generateTravelCode(int $id): string
+    private function generateTravelCode(int|string $id): string
     {
-        return new Sqids('ABCDEFGHKLMNPRSTUVWXYZ23456789', minLength: 4)->encode([$id]);
+        return new Sqids('ABCDEFGHKLMNPRSTUVWXYZ23456789', minLength: 4)->encode([(int)$id]);
     }
 
 }
