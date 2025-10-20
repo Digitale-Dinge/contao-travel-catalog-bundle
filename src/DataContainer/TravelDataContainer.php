@@ -63,7 +63,7 @@ final readonly class TravelDataContainer
         $model->save();
     }
 
-    private function generateAlias(string $name, int $id): string
+    private function generateAlias(string $name, int|string $id): string
     {
         $alias = $this->slugGenerator->generate($name);
 
