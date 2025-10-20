@@ -40,9 +40,13 @@ final class ListController extends AbstractContentElementController
     {
         $filterData = $this->getFormData($this->requestStack->getMainRequest(), $model);
 
+        $pagination = $this->getPagination($filterData, $model->id);
+
+        $filterData->page = $pagination->getCurrentPage();
+
         $template->set('travels', $this->getTravels($filterData, $model));
         $template->set('total', $filterData->limit);
-        $template->set('pagination', $this->getPagination($filterData, $model->id)->generate());
+        $template->set('pagination', $pagination->generate());
 
         return $template->getResponse();
     }
