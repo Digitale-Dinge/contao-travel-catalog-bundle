@@ -58,7 +58,10 @@ use Doctrine\DBAL\Types\Types;
                     'href' => 'table=' . ContentModel::getTable(),
                     'icon' => 'children.svg',
                 ],
-                'copy',
+                'copy' => [
+                    'href' => 'act=copy',
+                    'icon' => 'copy.svg'
+                ],
                 'delete',
                 'toggle',
                 'show'
@@ -95,7 +98,7 @@ use Doctrine\DBAL\Types\Types;
                 'eval' => [
                     'maxlength' => 255,
                     'tl_class' => 'w50',
-										'allowHtml' => true
+                    'allowHtml' => true
                 ],
                 'sql' => "varchar(255) NOT NULL default ''"
             ],
