@@ -43,7 +43,7 @@ readonly class TravelRepository
 
         // remove null value
         $arr = array_filter($arr, fn($s) => $s !== null);
-        
+
         return array_values(array_unique(array_merge(
             ...array_map(fn($s) => array_map('trim', explode(',', $s)), $arr)
         )));
@@ -83,10 +83,10 @@ readonly class TravelRepository
         if ($filterData->name) {
             $qb->andWhere($qb->expr()->or(
                 $qb->expr()->like('t.name', ':name'),
-                $qb->expr()->eq('p.travel_code', ':travel_code'),
+                $qb->expr()->like('p.travel_code', ':travel_code'),
             ));
-            $qb->setParameter('name', '%' . $filterData->name . '%');
-            $qb->setParameter('travel_code', $filterData->name);
+            $qb->setParameter('name', '%'.$filterData->name.'%');
+            $qb->setParameter('travel_code', '%'.$filterData->name.'%');
         }
 
         if ($filterData->oneDayTrip) {
