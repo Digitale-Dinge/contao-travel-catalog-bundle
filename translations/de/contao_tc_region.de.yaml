@@ -1,0 +1,4 @@
+tc_region:
+    name:
+        - Name
+        - Geben Sie den Namen der Region ein.

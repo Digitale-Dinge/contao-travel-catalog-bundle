@@ -1,0 +1,31 @@
+tc_date:
+    price:
+        - Preis
+        - Geben Sie den aktuellen Reisepreis ein.
+    old_price:
+        - Alter Preis
+        - Geben Sie den vorherigen Preis zum Vergleich ein.
+    travel_code:
+        - Reisecode
+        - Geben Sie einen eindeutigen Code für diesen Reisetermin ein.
+    departure:
+        - Abreisedatum
+        - Wählen Sie das Abreisedatum und die Uhrzeit.
+    return:
+        - Rückreisedatum
+        - Wählen Sie das Rückreisedatum und die Uhrzeit.
+    departure_text:
+        - Abreisetext
+        - Optionale textuelle Informationen zur Abreise.
+    return_text:
+        - Rückreisetext
+        - Optionale textuelle Informationen zur Rückreise.
+    published:
+        - Veröffentlicht
+        - Den Reisetermin auf der Website anzeigen.
+    start:
+        - Anzeigen ab
+        - Den Reisetermin erst ab diesem Datum anzeigen.
+    stop:
+        - Anzeigen bis
+        - Den Reisetermin nur bis zu diesem Datum anzeigen.

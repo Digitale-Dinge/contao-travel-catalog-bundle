@@ -1,0 +1,49 @@
+tc_travel:
+    pid:
+        - Category
+        - Select the category this travel entry belongs to.
+    name:
+        - Name
+        - Enter an internal name for the travel entry.
+    alias:
+        - Alias
+        - Enter a unique URL alias for the travel entry.
+    title:
+        - Title
+        - Enter the main title displayed in the frontend.
+    subtitle:
+        - Subtitle
+        - Optional subtitle displayed below the title.
+    meta_title:
+        - Meta title
+        - Enter an individual meta title for search engines.
+    meta_description:
+        - Meta description
+        - Enter a meta description for search engines.
+    countries:
+        - Countries
+        - Select the countries associated with this travel offer.
+    regions:
+        - Regions
+        - Select one or more regions associated with this travel offer.
+    description:
+        - Description
+        - Enter the main description of the travel offer.
+    image:
+        - Image
+        - Select an image for this travel offer.
+    published:
+        - Published
+        - Make the travel offer publicly visible.
+    start:
+        - Show from
+        - Do not show the travel offer before this date.
+    stop:
+        - Show until
+        - Do not show the travel offer after this date.
+    edit_prices:
+        - Edit prices
+        - Edit prices and travel dates for this travel offer.
+    edit_content:
+        - Edit content
+        - Edit content elements associated with this travel offer.

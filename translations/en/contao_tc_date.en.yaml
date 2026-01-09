@@ -1,0 +1,31 @@
+tc_date:
+    price:
+        - Price
+        - Enter the current travel price.
+    old_price:
+        - Old price
+        - Enter the previous price for comparison purposes.
+    travel_code:
+        - Travel code
+        - Enter a unique code to identify this travel date.
+    departure:
+        - Departure date
+        - Select the departure date and time.
+    return:
+        - Return date
+        - Select the return date and time.
+    departure_text:
+        - Departure text
+        - Optional textual information about the departure.
+    return_text:
+        - Return text
+        - Optional textual information about the return journey.
+    published:
+        - Published
+        - Make the travel date publicly visible.
+    start:
+        - Show from
+        - Do not show the travel date before this date.
+    stop:
+        - Show until
+        - Do not show the travel date after this date.
