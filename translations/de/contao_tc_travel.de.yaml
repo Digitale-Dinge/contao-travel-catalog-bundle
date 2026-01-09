@@ -1,0 +1,49 @@
+tc_travel:
+    pid:
+        - Kategorie
+        - Wählen Sie die Kategorie, zu der diese Reise gehört.
+    name:
+        - Name
+        - Geben Sie einen internen Namen für die Reise ein.
+    alias:
+        - Alias
+        - Geben Sie einen eindeutigen URL-Alias für die Reise ein.
+    title:
+        - Titel
+        - Geben Sie den im Frontend angezeigten Titel ein.
+    subtitle:
+        - Untertitel
+        - Optionaler Untertitel unterhalb des Titels.
+    meta_title:
+        - Meta-Titel
+        - Geben Sie einen individuellen Meta-Titel für Suchmaschinen ein.
+    meta_description:
+        - Meta-Beschreibung
+        - Geben Sie eine Meta-Beschreibung für Suchmaschinen ein.
+    countries:
+        - Länder
+        - Wählen Sie die Länder aus, die dieser Reise zugeordnet sind.
+    regions:
+        - Regionen
+        - Wählen Sie eine oder mehrere Regionen für diese Reise aus.
+    description:
+        - Beschreibung
+        - Geben Sie die Hauptbeschreibung der Reise ein.
+    image:
+        - Bild
+        - Wählen Sie ein Bild für diese Reise aus.
+    published:
+        - Veröffentlicht
+        - Die Reise auf der Website anzeigen.
+    start:
+        - Anzeigen ab
+        - Die Reise erst ab diesem Datum anzeigen.
+    stop:
+        - Anzeigen bis
+        - Die Reise nur bis zu diesem Datum anzeigen.
+    edit_prices:
+        - Preise bearbeiten
+        - Preise und Reisetermine für diese Reise bearbeiten.
+    edit_content:
+        - Inhalte bearbeiten
+        - Inhaltselemente bearbeiten, die dieser Reise zugeordnet sind.

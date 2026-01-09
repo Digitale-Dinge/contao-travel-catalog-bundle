@@ -1,0 +1,10 @@
+CTE:
+    travel_catalog_list:
+        - Reisekatalog-Liste
+        - Zeigt eine Liste von Reiseangeboten mit optionalen Filtern an.
+    travel_catalog_detail:
+        - Reisekatalog-Detail
+        - Zeigt die Detailansicht eines einzelnen Reiseangebots an.
+    travel_catalog_filter:
+        - Reisekatalog-Filter
+        - Stellt ein Filterformular zur Einschränkung von Reiseangeboten bereit.

@@ -1,0 +1,8 @@
+MOD:
+    travel_catalog: Reisekatalog
+    catalog:
+        - Katalog
+        - Reisekategorien, Reisen und Abfahrtsdaten verwalten.
+    regions:
+        - Regionen
+        - Regionen verwalten, die Reisen zugeordnet werden können.

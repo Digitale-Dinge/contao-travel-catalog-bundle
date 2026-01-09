@@ -1,0 +1,4 @@
+tc_category:
+    name:
+        - Name
+        - Enter the name of the travel category.

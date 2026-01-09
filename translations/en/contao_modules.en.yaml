@@ -1,0 +1,8 @@
+MOD:
+    travel_catalog: Travel catalog
+    catalog:
+        - Catalog
+        - Manage travel categories, trips and departure dates.
+    regions:
+        - Regions
+        - Manage regions that can be assigned to travel entries.

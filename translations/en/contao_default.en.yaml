@@ -1,0 +1,10 @@
+CTE:
+    travel_catalog_list:
+        - Travel catalog list
+        - Displays a list of travel offers with optional filtering.
+    travel_catalog_detail:
+        - Travel catalog detail
+        - Displays the details of a single travel offer.
+    travel_catalog_filter:
+        - Travel catalog filter
+        - Provides a filter form for narrowing down travel offers.
