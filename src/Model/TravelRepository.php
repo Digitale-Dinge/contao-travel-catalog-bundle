@@ -34,7 +34,7 @@ readonly class TravelRepository
         $filterData = new FilterData;
         $filterData->categories = $categories;
 
-        $qb = $this->getQueryBuilder($filterData);
+        $qb = $this->getQueryBuilder($filterData, false);
         $result = $qb->select('t.countries')
             ->distinct()
             ->fetchAllAssociative();
@@ -58,7 +58,7 @@ readonly class TravelRepository
         return $qb->executeQuery()->fetchOne();
     }
 
-    protected function getQueryBuilder(FilterData $filterData): QueryBuilder
+    protected function getQueryBuilder(FilterData $filterData, bool $orderDepartures = true): QueryBuilder
     {
         $qb = $this->connection->createQueryBuilder();
 
@@ -124,7 +124,9 @@ readonly class TravelRepository
             $qb->setMaxResults($filterData->perPage);
         }
 
-        $qb->orderBy('p.departure', 'ASC');
+        if ($orderDepartures) {
+            $qb->orderBy('p.departure', 'ASC');
+        }
 
         return $qb;
     }
