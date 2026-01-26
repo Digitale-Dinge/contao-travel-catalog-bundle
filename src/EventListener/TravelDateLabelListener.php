@@ -26,7 +26,8 @@ class TravelDateLabelListener
                 $prices = StringUtil::deserialize($row['prices'], true);
 
                 $labels[$i] = implode('<br>', array_map(
-                    fn($price) => "{$price['description']}: <span class='tl_green'>{$price['price']}€</span> (<s class='tl_red'>{$price['old_price']} €</s>)",
+                    fn($price) => $price['description'] . ': <span class="tl_green">' . $price['price'] . '€</span> ' .
+                        ($price['old_price'] ? '<s class="tl_red">' . $price['old_price'] . ' €</s>' : ''),
                     $prices
                 ));
             }
