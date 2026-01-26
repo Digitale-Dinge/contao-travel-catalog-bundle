@@ -22,9 +22,12 @@ readonly class RegionRepository
             ->from('tc_region', 'r')
             ->innerJoin('r', 'tc_travel', 't')
             ->where('FIND_IN_SET(r.id, t.regions) > 0')
+            ->andWhere('t.published = 1')
+            ->andWhere("t.start = '' OR t.start <= :now")
+            ->andWhere("t.stop = '' OR t.stop > :now")
+            ->setParameter('now', time())
             ->orderBy('r.name');
 
         return $qb->executeQuery()->fetchAllAssociative();
     }
-
 }
