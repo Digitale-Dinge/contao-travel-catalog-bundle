@@ -30,7 +30,7 @@ use Doctrine\DBAL\Types\Types;
             'default' => '
                 pid;
                 name,alias,title,subtitle;
-                meta_title,meta_description;
+                meta_title,meta_description,serp_preview;
                 countries,regions,description;
                 image;
                 published,start,stop;
@@ -189,6 +189,16 @@ use Doctrine\DBAL\Types\Types;
                 ],
                 'sql' => "varchar(255) NOT NULL default ''"
             ],
+            'serp_preview' => [
+                'label' => &$GLOBALS['TL_LANG']['MSC']['serpPreview'],
+                'inputType' => 'serpPreview',
+                'eval' => [
+                    'url_callback' => static fn () => 'example.com', // Could use the ContentUrlGenerator
+                    'titleFields'=> ['meta_title', 'title'],
+                    'descriptionFields'=> ['meta_description', 'subtitle']
+                ],
+                'sql' => null
+            ],
             'image' => [
                 'inputType' => 'fileTree',
                 'eval' => [
@@ -204,7 +214,7 @@ use Doctrine\DBAL\Types\Types;
                 'toggle' => true,
                 'filter' => true,
                 'eval' => [
-                    'tl_class' => 'w33 m12'
+                    'tl_class' => 'w50'
                 ],
                 'sql' => "char(1) NOT NULL default ''"
             ],
@@ -214,7 +224,7 @@ use Doctrine\DBAL\Types\Types;
                 'eval' => [
                     'rgxp' => 'datim',
                     'datepicker' => true,
-                    'tl_class' => 'w33 wizard'
+                    'tl_class' => 'w50 clr wizard'
                 ],
                 'sql' => "varchar(10) COLLATE ascii_bin NOT NULL default ''"
             ],
@@ -224,7 +234,7 @@ use Doctrine\DBAL\Types\Types;
                 'eval' => [
                     'rgxp' => 'datim',
                     'datepicker' => true,
-                    'tl_class' => 'w33 wizard'
+                    'tl_class' => 'w50 wizard'
                 ],
                 'sql' => "varchar(10) COLLATE ascii_bin NOT NULL default ''"
             ]
