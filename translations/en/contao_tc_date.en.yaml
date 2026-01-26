@@ -1,4 +1,10 @@
 tc_date:
+    prices:
+        - Prices
+        - Enter the current travel prices.
+    price_text:
+        - Description
+        - Enter a description for the travel price.
     price:
         - Price
         - Enter the current travel price.

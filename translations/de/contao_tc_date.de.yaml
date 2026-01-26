@@ -1,4 +1,10 @@
 tc_date:
+    prices:
+        - Preise
+        - Geben Sie die aktuellen Reisepreise ein.
+    price_text:
+        - Beschreibung
+        - Geben Sie hier die Preisbeschreibung ein.
     price:
         - Preis
         - Geben Sie den aktuellen Reisepreis ein.

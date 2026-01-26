@@ -13,7 +13,7 @@ use Doctrine\DBAL\Types\Types;
             'dataContainer' => DC_Table::class,
             'enableVersioning' => true,
             'ptable' => TravelModel::getTable(),
-            #'doNotCopyRecords' => true,
+            // 'doNotCopyRecords' => true,
             'sql' => [
                 'keys' => [
                     'id' => 'primary',
@@ -23,7 +23,7 @@ use Doctrine\DBAL\Types\Types;
         ],
         'palettes' => [
             'default' => '
-                price,old_price,travel_code;
+                travel_code,prices;
                 departure,return,departure_text,return_text;
                 published,start,stop;
             '
@@ -32,8 +32,7 @@ use Doctrine\DBAL\Types\Types;
             'label' => [
                 'fields' => [
                     'travel_code',
-                    'price',
-                    'old_price',
+                    'prices',
                     'departure',
                     'return',
                     'departure_text',
@@ -68,34 +67,6 @@ use Doctrine\DBAL\Types\Types;
                 ],
                 'sql' => "int(10) unsigned NOT NULL default '0'"
             ],
-            'price' => [
-                'inputType' => 'text',
-                'eval' => [
-                    'mandatory' => true,
-                    'rgxp' => 'digit',
-                    'maxlength' => 7,
-                    'tl_class' => 'w25'
-                ],
-                'sql' => [
-                    'type' => Types::FLOAT,
-                    'unsigned' => true,
-                    'notnull' => true,
-                    'default' => 0.00,
-                ]
-            ],
-            'old_price' => [
-                'inputType' => 'text',
-                'eval' => [
-                    'rgxp' => 'digit',
-                    'maxlength' => 7,
-                    'tl_class' => 'w25'
-                ],
-                'sql' => [
-                    'type' => Types::FLOAT,
-                    'unsigned' => true,
-                    'notnull' => false,
-                ]
-            ],
             'travel_code' => [
                 'inputType' => 'text',
                 'search' => true,
@@ -103,9 +74,37 @@ use Doctrine\DBAL\Types\Types;
                     'unique' => true,
                     'maxlength' => 16,
                     'doNotCopy' => true,
-                    'tl_class' => 'w25'
+                    'tl_class' => 'w50'
                 ],
                 'sql' => "varchar(16) NULL"
+            ],
+            'prices' => [
+                'inputType' => 'rowWizard',
+                'exclude' => true,
+                'fields' => [
+                    'description' => [
+                        'label' => &$GLOBALS['TL_LANG']['tc_date']['price_text'][0],
+                        'inputType' => 'text',
+                    ],
+                    'price' => [
+                        'label' => &$GLOBALS['TL_LANG']['tc_date']['price'][0],
+                        'inputType' => 'text',
+                        'eval' => [
+                            'rgxp' => 'digit',
+                            'maxlength' => 7,
+                        ]
+                    ],
+                    'old_price' => [
+                        'label' => &$GLOBALS['TL_LANG']['tc_date']['old_price'][0],
+                        'inputType' => 'text',
+                        'eval' => [
+                            'rgxp' => 'digit',
+                            'maxlength' => 7,
+                        ],
+                    ]
+                ],
+                'eval' => ['tl_class' => 'w50 clr', 'mandatory' => true],
+                'sql' => 'text NULL',
             ],
             'departure' => [
                 'inputType' => 'text',
@@ -164,7 +163,7 @@ use Doctrine\DBAL\Types\Types;
                 'inputType' => 'checkbox',
                 'toggle' => true,
                 'eval' => [
-                    'tl_class' => 'w33 m12'
+                    'tl_class' => 'w50'
                 ],
                 'sql' => "char(1) NOT NULL default ''"
             ],
@@ -173,7 +172,7 @@ use Doctrine\DBAL\Types\Types;
                 'eval' => [
                     'rgxp' => 'datim',
                     'datepicker' => true,
-                    'tl_class' => 'w33 wizard'
+                    'tl_class' => 'w50 clr wizard'
                 ],
                 'sql' => "varchar(10) COLLATE ascii_bin NOT NULL default ''"
             ],
@@ -182,7 +181,7 @@ use Doctrine\DBAL\Types\Types;
                 'eval' => [
                     'rgxp' => 'datim',
                     'datepicker' => true,
-                    'tl_class' => 'w33 wizard'
+                    'tl_class' => 'w50 wizard'
                 ],
                 'sql' => "varchar(10) COLLATE ascii_bin NOT NULL default ''"
             ]
