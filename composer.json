@@ -21,7 +21,7 @@
         "symfony/http-foundation": "^7.3",
         "symfony/http-kernel": "^7.3",
         "twig/intl-extra": "^3.21",
-        "zoglo/contao-row-wizard": "^0.1"
+        "zoglo/contao-row-wizard": "@dev"
     },
     "require-dev": {
         "carthage-software/mago": "^0.26.1",
