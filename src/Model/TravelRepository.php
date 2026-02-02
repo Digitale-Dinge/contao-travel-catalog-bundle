@@ -4,20 +4,18 @@ declare(strict_types=1);
 
 namespace DigitaleDinge\TravelCatalogBundle\Model;
 
-use Contao\CoreBundle\Routing\ScopeMatcher;
+use Contao\CoreBundle\Security\Authentication\Token\TokenChecker;
 use Contao\Date;
 use DigitaleDinge\TravelCatalogBundle\FormData\FilterData;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 readonly class TravelRepository
 {
 
     public function __construct(
         private Connection $connection,
-        private RequestStack $requestStack,
-        private ScopeMatcher $scopeMatcher,
+        private TokenChecker $tokenChecker,
     )
     {
     }
@@ -64,16 +62,20 @@ readonly class TravelRepository
 
         $qb->select('p.id')
             ->from(DateModel::getTable(), 'p')
-            ->rightJoin('p', TravelModel::getTable(), 't', 'p.pid = t.id')
-            ->where(
+            ->rightJoin('p', TravelModel::getTable(), 't', 'p.pid = t.id');
+
+        if (!$this->tokenChecker->isPreviewMode()) {
+            $qb->where(
                 't.published = 1',
                 "t.start = '' OR t.start <= :now",
                 "t.stop = '' OR t.stop > :now",
                 'p.published = 1',
                 "p.start = '' OR p.start <= :now",
                 "p.stop = '' OR p.stop > :now",
-            )->setParameter('now', Date::floorToMinute())
-            ->setFirstResult(($filterData->page - 1) * $filterData->perPage);
+            )->setParameter('now', Date::floorToMinute());
+        }
+
+        $qb->setFirstResult(($filterData->page - 1) * $filterData->perPage);
 
         if ($filterData->categories !== []) {
             $qb->andWhere('FIND_IN_SET(t.pid, :categories)');
