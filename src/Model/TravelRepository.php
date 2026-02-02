@@ -94,8 +94,8 @@ readonly class TravelRepository
         }
 
         if ($filterData->date) {
-            $qb->andWhere('DATE_FORMAT(FROM_UNIXTIME(p.departure), "%Y-%m-%d") = :date');
-            $qb->setParameter('date', $filterData->date->format('Y-m-d'));
+            $qb->andWhere("p.departure != '' AND p.departure >= :date");
+            $qb->setParameter('date', $filterData->date->format('U'));
         }
 
         if ($filterData->country !== []) {
