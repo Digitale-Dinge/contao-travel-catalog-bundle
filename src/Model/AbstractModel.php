@@ -8,7 +8,6 @@ use Contao\Model;
 
 abstract class AbstractModel extends Model
 {
-
     final public static function fqid(string $field, ?string $sorting = null): string
     {
         return sprintf('`%s`.`%s` %s',
@@ -18,4 +17,8 @@ abstract class AbstractModel extends Model
         );
     }
 
+    final public static function foreignKey(string $field): string
+    {
+        return sprintf('%s.%s', self::getTable(), $field);
+    }
 }

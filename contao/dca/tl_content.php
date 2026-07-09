@@ -10,7 +10,7 @@ use DigitaleDinge\TravelCatalogBundle\Model\CategoryModel;
 (static function (string $table): void {
     $GLOBALS['TL_DCA'][$table]['fields']['tc_categories'] = [
         'inputType' => 'select',
-        'foreignKey' => CategoryModel::fqid('name'),
+        'foreignKey' => CategoryModel::foreignKey('name'),
         'eval' => [
             'multiple' => true,
             'chosen' => true,

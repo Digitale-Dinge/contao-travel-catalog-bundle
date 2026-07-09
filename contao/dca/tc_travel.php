@@ -73,7 +73,7 @@ use Doctrine\DBAL\Types\Types;
             ],
             'pid' => [
                 'inputType' => 'select',
-                'foreignKey' => CategoryModel::fqid('name'),
+                'foreignKey' => CategoryModel::foreignKey('name'),
                 'eval' => [
                     'tl_class' => 'w50'
                 ],
@@ -151,7 +151,7 @@ use Doctrine\DBAL\Types\Types;
             ],
             'regions' => [
                 'inputType' => 'select',
-                'foreignKey' => RegionModel::fqid('name'),
+                'foreignKey' => RegionModel::foreignKey('name'),
                 'filter' => true,
                 'eval' => [
                     'multiple' => true,
