@@ -9,6 +9,11 @@
             "name": "Daniel Jahnsmüller",
             "email": "code@tastaturberuf.de",
             "role": "Developer"
+        },
+        {
+            "name": "Digitale Dinge GmbH",
+            "homepage": "https://digitaledin.ge",
+            "role": "Developer"
         }
     ],
     "require": {
